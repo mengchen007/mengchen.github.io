@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #demo {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute; /*一定要记得加定位*/
+        }
+    </style>
+</head>
+<body>
+<button id="btn1">奔跑吧盒子200</button>
+<button id="btn2">奔跑吧盒子400</button>
+<button id="btn3">奔跑吧盒子0</button>
+
+<div id="demo"></div>
+
+<script>
+
+
+    //盒子移动到指定位置
+    /*
+    1.先给一个位置400
+    2.设置定时器每次移动10px
+    3.判断如果指定位置在当前位置左边应该怎么走
+    4.封装函数
+    * */
+
+    var btn1 = document.getElementById("btn1");
+    var btn2 = document.getElementById("btn2");
+    var btn3 = document.getElementById("btn3");
+    var demo = document.getElementById("demo");
+
+    var timer = null;
+
+    btn1.onclick = function () {
+
+        movePic(demo, 200);
+
+    };
+    btn2.onclick = function () {
+        movePic(demo, 400);
+
+    };
+    btn3.onclick = function () {
+        movePic(demo, 0);
+
+    };
+
+    function movePic(obj, target) {
+
+        timer = setInterval(function () {
+
+            var leader = obj.offsetLeft;  //当前位置
+            var step = 10;  //每次移动的距离
+
+            //如果目标位置小于当前位置 则每次移动位置为负 否则为正
+
+            step = target < leader ? -step : step;
+
+            //如果移动的距离大于step则移动
+            if (Math.abs(target - leader) >= Math.abs(step)) {
+                leader = leader + step;
+
+                obj.style.left = leader + "px";
+            }else {
+                obj.style.left = target+"px";
+                clearInterval(timer);
+            }
+
+        }, 15)
+
+    }
+
+
+</script>
+</body>
+</html>
